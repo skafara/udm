@@ -1,0 +1,231 @@
+{% extends "template.twig" %}
+
+{% from "subject_materials.macro.twig" import subject_materials %}
+
+{% block pagecontent %}
+
+    <div class="p-2 border-top border-bottom bg-light">
+        <h1 class="h2 mb-0">
+            Hledání{{ (query) ? ": %#{query}%" : "" }}
+        </h1>
+    </div>
+
+    <div class="my-3">
+        <div class="my-3">
+            <h2 class="h4">Předměty</h2>
+            <hr class="mt-0">
+            <div>
+                {% if subjects %}
+                    <ul class="nav nav-tabs my-2" role="tablist">
+                        {% for faculty in subjects | keys %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link{{ (loop.first) ? ' active' : '' }}" id="tabSubjects{{ faculty }}"
+                                        data-bs-toggle="tab" data-bs-target="#tabSubjectsPane{{ faculty }}" type="button"
+                                        role="tab" aria-controls="tabSubjectsPane{{ faculty }}"
+                                        aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                                    {{ faculty }}
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for faculty, departments in subjects %}
+                            <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}" id="tabSubjectsPane{{ faculty }}"
+                                 role="tabpanel" aria-labelledby="tabSubjects{{ faculty }}" tabindex="0">
+                                <ul class="nav nav-tabs my-2" role="tablist">
+                                    {% for department, subjects in departments %}
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link{{ (loop.first) ? ' active' : '' }}"
+                                                    id="tabSubjects{{ faculty }}{{ department }}" data-bs-toggle="tab"
+                                                    data-bs-target="#tabSubjectsPane{{ faculty }}{{ department }}" type="button"
+                                                    role="tab" aria-controls="tabSubjectsPane{{ faculty }}{{ department }}"
+                                                    aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                                                {{ department }}
+                                            </button>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="tab-content">
+                                    {% for department, subjects in departments %}
+                                        <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}"
+                                             id="tabSubjectsPane{{ faculty }}{{ department }}" role="tabpanel"
+                                             aria-labelledby="tabSubjects{{ faculty }}{{ department }}" tabindex="0">
+                                            {% for row in subjects | batch(8) %}
+                                                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-2 mx-0">
+                                                    {% for id, subject in row %}
+                                                        <div class="col">
+                                                            <div class="card">
+                                                                <h3 class="h5 card-header">
+                                                                    {{ subject.Subject_full_name }}
+                                                                </h3>
+                                                                <div class="card-body">
+                                                                    <h6 class="card-title">
+                                                                        Vyučující:
+                                                                    </h6>
+                                                                    <ul class="mb-0">
+                                                                        {% for teacher in subject.teachers %}
+                                                                            <li>
+                                                                                <a href='.?page=search&q={{ "#{ teacher.User_last_name } #{ teacher.User_first_name }" | url_encode }}'>
+                                                                                    {{ "#{ teacher.User_last_name } #{ teacher.User_first_name }" }}
+                                                                                </a>
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="card-footer d-flex flex-row justify-content-between align-items-center">
+                                                                    <span class="font-monospace text-secondary">
+                                                                        <a href=".?page=search&q={{ department }}">{{ department }}</a>/<a href='.?page=search&q={{ "#{ department }/#{ subject.Subject_short_name }" }}'>{{ subject.Subject_short_name }}</a>
+                                                                    </span>
+                                                                    <a href=".?page=subject&id={{ id }}" class="btn btn-primary">
+                                                                        Zobrazit
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Žádné předměty nebyly nalezeny.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="my-3">
+            <h2 class="h4">Vyučující</h2>
+            <hr class="mt-0">
+            <div>
+                {% if teachers %}
+                    <ul class="nav nav-tabs my-2" role="tablist">
+                        {% for faculty in teachers | keys %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link{{ (loop.first) ? ' active' : '' }}" id="tabTeachers{{ faculty }}"
+                                        data-bs-toggle="tab" data-bs-target="#tabTeachersPane{{ faculty }}" type="button"
+                                        role="tab" aria-controls="tabTeachersPane{{ faculty }}"
+                                        aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                                    {{ faculty }}
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for faculty, departments in teachers %}
+                            <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}" id="tabTeachersPane{{ faculty }}"
+                                 role="tabpanel" aria-labelledby="tabTeachers{{ faculty }}" tabindex="0">
+                                <ul class="nav nav-tabs my-2" role="tablist">
+                                    {% for department, subjects in departments %}
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link{{ (loop.first) ? ' active' : '' }}"
+                                                    id="tabTeachers{{ faculty }}{{ department }}" data-bs-toggle="tab"
+                                                    data-bs-target="#tabTeachersPane{{ faculty }}{{ department }}" type="button"
+                                                    role="tab" aria-controls="tabTeachersPane{{ faculty }}{{ department }}"
+                                                    aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                                                {{ department }}
+                                            </button>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="tab-content">
+                                    {% for department, teachers in departments %}
+                                        <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}"
+                                             id="tabTeachersPane{{ faculty }}{{ department }}" role="tabpanel"
+                                             aria-labelledby="tabTeachers{{ faculty }}{{ department }}" tabindex="0">
+                                            <ul>
+                                                {% for id, teacher in teachers %}
+                                                    <li>
+                                                        <a href='.?page=search&q={{ "#{ teacher.User_last_name } #{ teacher.User_first_name }" | url_encode }}'>
+                                                            {{ "#{ teacher.User_last_name } #{ teacher.User_first_name }" }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Žádní vyučující nebyly nalezeny.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="my-3">
+            <h2 class="h4">Materiály</h2>
+            <hr class="mt-0">
+            <div>
+                {% if materials %}
+                    <ul class="nav nav-tabs my-2" role="tablist">
+                        {% for faculty in materials | keys %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link{{ (loop.first) ? ' active' : '' }}" id="tabMaterials{{ faculty }}"
+                                        data-bs-toggle="tab" data-bs-target="#tabMaterialsPane{{ faculty }}" type="button"
+                                        role="tab" aria-controls="tabMaterialsPane{{ faculty }}"
+                                        aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                                    {{ faculty }}
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for faculty, departments in materials %}
+                            <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}" id="tabMaterialsPane{{ faculty }}"
+                                 role="tabpanel" aria-labelledby="tabMaterials{{ faculty }}" tabindex="0">
+                                <ul class="nav nav-tabs my-2" role="tablist">
+                                    {% for department, subjects in departments %}
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link{{ (loop.first) ? ' active' : '' }}"
+                                                    id="tabMaterials{{ faculty }}{{ department }}" data-bs-toggle="tab"
+                                                    data-bs-target="#tabMaterialsPane{{ faculty }}{{ department }}" type="button"
+                                                    role="tab" aria-controls="tabMaterialsPane{{ faculty }}{{ department }}"
+                                                    aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                                                {{ department }}
+                                            </button>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="tab-content">
+                                    {% for department, subjectIds in departments %}
+                                        <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}" id="tabMaterialsPane{{ faculty }}{{ department }}"
+                                             role="tabpanel" aria-labelledby="tabMaterials{{ faculty }}{{ department }}" tabindex="0">
+                                            <ul class="nav nav-tabs my-2" role="tablist">
+                                                {% for subjectId, subject in subjectIds %}
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link{{ (loop.first) ? ' active' : '' }}"
+                                                                id="tabMaterials{{ faculty }}{{ department }}{{ subject.Subject_short_name }}" data-bs-toggle="tab"
+                                                                data-bs-target="#tabMaterialsPane{{ faculty }}{{ department }}{{ subject.Subject_short_name }}" type="button"
+                                                                role="tab" aria-controls="tabMaterialsPane{{ faculty }}{{ department }}{{ subject.Subject_short_name }}"
+                                                                aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                                                            {{ subject.Subject_short_name }}
+                                                        </button>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                            <div class="tab-content">
+                                                {% for subjectId, subject in subjectIds %}
+                                                    <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}"
+                                                         id="tabMaterialsPane{{ faculty }}{{ department }}{{ subject.Subject_short_name }}" role="tabpanel"
+                                                         aria-labelledby="tabMaterials{{ faculty }}{{ department }}{{ subject.Subject_short_name }}" tabindex="0">
+                                                        {{ subject_materials(subjectId, subject.materials) }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Žádné materiály nebyly nalezeny.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
