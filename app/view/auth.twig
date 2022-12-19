@@ -1,0 +1,75 @@
+{% set login = "login" %}
+{% set register = "register" %}
+
+<div class="modal fade hide" tabindex="-1" id="authForm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% if authform == login %}
+                        Přihlášení
+                    {% elseif authform == register %}
+                        Registrace
+                    {% endif %}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action=".?authaction={{ authform }}" method="post">
+                <div class="modal-body">
+                    {% if authform == register %}
+                        <div class="row">
+                            <div class="col-sm-6 mb-3"> <!-- First Name -->
+                                <label for="afFirstName" class="form-label">
+                                    Křestní jméno
+                                </label>
+                                <input name="firstName" type="text" class="form-control" id="afFirstName">
+                            </div>
+                            <div class="col-sm-6 mb-3"> <!-- Last Name -->
+                                <label for="afLastName" class="form-label">
+                                    Příjmení
+                                </label>
+                                <input name="lastName" type="text" class="form-control" id="afLastName">
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="mb-3"> <!-- Username -->
+                        <label for="afLogin" class="form-label">
+                            Uživatelské jméno
+                        </label>
+                        <input name="login" type="text" class="form-control" id="afLogin">
+                    </div>
+                    {% if authform == register %}
+                        <div class="mb-3"> <!-- Email -->
+                            <label for="afEmail" class="form-label">
+                                Email
+                            </label>
+                            <input name="email" type="email" class="form-control" id="afEmail">
+                        </div>
+                    {% endif %}
+                    <div class="mb-3"> <!-- Password -->
+                        <label for="afPassword" class="form-label">Heslo</label>
+                        <input name="password" type="password" class="form-control" id="afPassword">
+                    </div>
+                    <p class="m-0">
+                        {% if authform == login %}
+                            Nemáte uživatelský účet?
+                            <a href=".?authform={{ register }}">Registrujte se.</a>
+                        {% elseif authform == register %}
+                            Máte uživatelský účet?
+                            <a href=".?authform={{ login }}">Přihlaste se.</a>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        {% if authform == login %}
+                            Přihlásit se
+                        {% elseif authform == register %}
+                            Registrovat se
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

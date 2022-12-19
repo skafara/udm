@@ -1,0 +1,75 @@
+{% extends "template.twig" %}
+
+{% block pagecontent %}
+
+    <!-- Page Content -->
+    {% if authform %}
+
+        {% include "auth.twig" %}
+
+    {% endif %}
+
+    <div class="py-2 text-center border-top border-bottom bg-light">
+        <h1 class="display-6 mb-3">Místo pro&nbsp;sdílení studijních materiálů</h1>
+        <div>
+            <p class="h4">
+                {{ materialsCount }} materiálů, {{ subjectsCount }} předmětů
+            </p>
+        </div>
+    </div>
+
+    <div class="row my-4">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <div class="d-flex flex-column align-items-center">
+                <p class="text-center">
+                    Chci <strong>sdílet</strong> své&nbsp;materiály se studenty...
+                </p>
+                <button type="button" class="btn btn-success btn-lg pill">
+                    Sdílet materiály
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex flex-column align-items-center">
+                <div class="mb-4">
+                    <form id="searchForm">
+                        <label for="searchInput" class="form-label mb-3">
+                            Chci <strong>vyhledat</strong> materiály, předměty, učitele...
+                        </label>
+                        <div class="input-group input-group-lg pill">
+                            <input id="searchInput" name="q" type="text" class="form-control"
+                                   placeholder="klíčové slovo" aria-label="klíčové slovo"
+                                   aria-describedby="searchButton">
+                            <button id="searchButton" class="btn btn-primary" type="submit">
+                                Vyhledat
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="d-flex flex-column">
+                    <label for="searchInput" class="form-label mb-3">
+                        Chci <strong>vyhledávat</strong> manuálně...
+                    </label>
+                    <a href=".?page=search">
+                        <button type="button" class="btn btn-primary btn-lg pill">
+                            Hledat manuálně
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("searchForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const searchInput = document.getElementById("searchInput");
+            let location = ".?page=search";
+            if (searchInput.value !== "") {
+                location += "&q=" + searchInput.value;
+            }
+            window.location = location;
+        })
+    </script>
+
+{% endblock %}
