@@ -1,0 +1,65 @@
+{% macro subject_materials(subjectId, materials) %}
+
+    {% if materials %}
+        <ul class="nav nav-tabs my-2" role="tablist">
+            {% for materialType in materials | keys %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link{{ (loop.first) ? ' active' : '' }}" id="tabSubject{{ subjectId }}MaterialType{{ loop.index }}"
+                            data-bs-toggle="tab" data-bs-target="#tabSubject{{ subjectId }}MaterialTypePane{{ loop.index }}" type="button"
+                            role="tab" aria-controls="tabSubject{{ subjectId }}MaterialTypePane{{ loop.index }}"
+                            aria-selected="{{ (loop.first) ? 'true' : 'false' }}">
+                        {{ materialType }}
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for materialType, materialGroups in materials %}
+                <div class="tab-pane fade show{{ (loop.first) ? ' active' : '' }}" id="tabSubject{{ subjectId }}MaterialTypePane{{ loop.index }}"
+                     role="tabpanel" aria-labelledby="tabSubject{{ subjectId }}MaterialType{{ loop.index }}" tabindex="0">
+                    {% for row in materialGroups | batch(12) %}
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-2 mx-0">
+                            {% for materialGroupId, materialGroup in row %}
+                                <div class="col">
+                                    <div class="card">
+                                        <h3 class="h5 card-header">
+                                            {{ materialGroup.MaterialGroup_description }}
+                                        </h3>
+                                        <div class="card-body">
+                                            <h6 class="card-title">
+                                                Materiály:
+                                            </h6>
+                                            <ul class="mb-0">
+                                                {% for materialId, material in (materialGroup.materials | batch(4))[0] %}
+                                                    <li>
+                                                        {{ material.Material_full_name }}<!-- TODO view, download -->
+                                                    </li>
+                                                {% endfor %}
+                                                {% if (materialGroup.materials | length) > 4 %}
+                                                    <li>...</li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer d-flex flex-row justify-content-between align-items-center">
+                                            <a href='.?page=search&q={{ "#{materialGroup.User_last_name} #{materialGroup.User_first_name}" | url_encode }}'>
+                                                <span>
+                                                    {{ "#{materialGroup.User_last_name} #{materialGroup.User_first_name}" }}
+                                                </span>
+                                            </a>
+                                            <a href=".?page=subject&id={{ id }}" class="btn btn-primary"> <!-- TODO -->
+                                                Zobrazit
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Žádné materiály nebyly nalezeny.</p>
+    {% endif %}
+
+{% endmacro %}

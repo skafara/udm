@@ -1,0 +1,56 @@
+{% extends "template.twig" %}
+
+{% from "subject_materials.macro.twig" import subject_materials %}
+
+{% block pagecontent %}
+
+    <div class="p-2 border-top border-bottom bg-light">
+        <p class="font-monospace mb-1">
+            <a href=".?page=search&q={{ subject.Faculty_short_name }}">{{ subject.Faculty_short_name }}</a>/<a href='.?page=search&q={{ "#{ subject.Faculty_short_name }/#{ subject.Department_short_name }" }}'>{{ subject.Department_short_name }}</a>/{{ subject.Subject_short_name }}
+        </p>
+        <h1 class="h2 mb-0">
+            {{ subject.Subject_full_name }}
+        </h1>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-sm-6">
+            <h2 class="h4">
+                Osnova předmětu
+            </h2>
+            <p class="small">
+                {% if subject.Subject_content %}
+                    {{ subject.Subject_content | nl2br }}
+                {% else %}
+                    Žádná osnova nebyla nalezena.
+                {% endif %}
+            </p>
+        </div>
+        <div class="col-sm-6">
+            {% if subject.teachers %}
+                {% for type, teachers in subject.teachers %}
+                    <div>
+                        <h2 class="h4">{{ type }}</h2>
+                        <ul>
+                            {% for teacher in teachers %}
+                                <li>
+                                    <a href=".?page=search&q={{ "#{ teacher.User_last_name } #{ teacher.User_first_name }" | url_encode }}">
+                                        {{ "#{ teacher.User_last_name } #{ teacher.User_first_name }" }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h3 class="h5">Vyučující</h3>
+                <p>Žádní vyučující nebyly nalezeny.</p>
+            {% endif %}
+        </div>
+        <div class="my-3">
+            <h2 class="h4">Studijní materiály</h2>
+            {{ subject_materials(subject.Subject_id, materials) }} <!-- TODO -->
+        </div>
+    </div>
+
+{% endblock %}
