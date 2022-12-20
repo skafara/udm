@@ -15,11 +15,7 @@
     <!-- Font Awesome: v4.7.0 -->
     <link rel="stylesheet" href="./vendor/fortawesome/font-awesome/css/font-awesome.min.css">
 
-    <style>
-        .pill { /* TODO */
-            width: 320px;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/template.css">
 </head>
 <body class="h-100">
 
@@ -47,6 +43,14 @@
                                         Info
                                     </a>
                                 </li>
+                                {% if loggedIn %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href=".?page=admin">
+                                            <span class="fa fa-wrench" aria-hidden="true"></span>
+                                            Administrace
+                                        </a>
+                                    </li>
+                                {% endif %}
                                 <li class="nav-item">
                                     {% if loggedIn %}
                                         <a class="nav-link" href=".?authaction=logout">
@@ -79,7 +83,10 @@
         <!-- Footer -->
         <footer class="mt-auto text-muted">
             <div class="container d-flex justify-content-between border-top py-4">
-                <span class="me-2">Stanislav&nbsp;Kafara, 20.&nbsp;12.&nbsp;2022</span>
+                <span class="me-2">
+                    <span class="fa fa-user" aria-hidden="true"></span>
+                    Stanislav&nbsp;Kafara, 20.&nbsp;12.&nbsp;2022
+                </span>
                 <span class="ms-2 text-end">
                     <span class="fa fa-github" aria-hidden="true"></span>
                     <a class="text-muted" href="https://github.com/skafara/udm">

@@ -6,9 +6,10 @@
 
     <div class="p-2 border-top border-bottom bg-light">
         <p class="font-monospace mb-1">
-            <a href=".?page=search&q={{ subject.Faculty_short_name }}">{{ subject.Faculty_short_name }}</a>/<a href='.?page=search&q={{ "#{ subject.Faculty_short_name }/#{ subject.Department_short_name }" }}'>{{ subject.Department_short_name }}</a>/{{ subject.Subject_short_name }}
+            <a href=".?page=search&q={{ subject.Faculty_short_name }}">{{ subject.Faculty_short_name }}</a>/<a href='.?page=search&q={{ "#{ subject.Faculty_short_name }/#{ subject.Department_short_name }" }}'>{{ subject.Department_short_name }}</a>/<a href='.?page=search&q={{ "#{ subject.Department_short_name }/#{ subject.Subject_short_name }" }}'>{{ subject.Subject_short_name }}</a>
         </p>
         <h1 class="h2 mb-0">
+            <span class="fa fa-book" aria-hidden="true"></span>
             {{ subject.Subject_full_name }}
         </h1>
     </div>
@@ -16,6 +17,7 @@
     <div class="row my-3">
         <div class="col-sm-6">
             <h2 class="h4">
+                <span class="fa fa-list" aria-hidden="true"></span>
                 Osnova předmětu
             </h2>
             <p class="small">
@@ -30,7 +32,10 @@
             {% if subject.teachers %}
                 {% for type, teachers in subject.teachers %}
                     <div>
-                        <h2 class="h4">{{ type }}</h2>
+                        <h2 class="h4">
+                            <span class="fa fa-graduation-cap" aria-hidden="true"></span>
+                            {{ type }}
+                        </h2>
                         <ul>
                             {% for teacher in teachers %}
                                 <li>
@@ -43,13 +48,20 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <h3 class="h5">Vyučující</h3>
+                <h3 class="h5">
+                    <span class="fa fa-graduation-cap" aria-hidden="true"></span>
+                    Vyučující
+                </h3>
                 <p>Žádní vyučující nebyly nalezeny.</p>
             {% endif %}
         </div>
         <div class="my-3">
-            <h2 class="h4">Studijní materiály</h2>
-            {{ subject_materials(subject.Subject_id, materials) }} <!-- TODO -->
+            <h2 class="h4">
+                <span class="fa fa-leanpub" aria-hidden="true"></span>
+                Studijní materiály
+            </h2>
+            <hr class="mt-0">
+            {{ subject_materials(subject.Subject_id, materials) }}
         </div>
     </div>
 

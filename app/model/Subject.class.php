@@ -69,4 +69,29 @@ class Subject extends AModel {
         return $result;
     }
 
+    public function getSubjects(): array {
+        $stmt = $this->pdo->prepare("SELECT F.short_name AS Faculty_short_name, D.short_name AS Department_short_name, S.id AS Subject_id, S.short_name AS Subject_short_name FROM Subject S JOIN Department D ON S.Department_id = D.id JOIN Faculty F ON D.Faculty_id = F.id ORDER BY F.short_name, D.short_name, S.short_name;");
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = [];
+        foreach ($rows as $row) {
+            $faculty = $row["Faculty_short_name"];
+            $department = $row["Department_short_name"];
+            if (!array_key_exists($faculty, $result)) {
+                $result[$faculty] = [];
+            }
+            if (!array_key_exists($department, $result[$faculty])) {
+                $result[$faculty][$department] = [];
+            }
+            $result[$faculty][$department][$row["Subject_id"]] = ["Subject_short_name" => $row["Subject_short_name"]];
+        }
+        return $result;
+    }
+
+    public function getLessonTypes(): array {
+        $stmt = $this->pdo->prepare("SELECT id AS LessonType_id, full_name AS LessonType_full_name FROM LessonType;");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

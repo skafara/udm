@@ -72,7 +72,14 @@ class Auth extends AController {
     }
 
     private function register(): void {
-        return;
+        if (!isset($_POST["login"], $_POST["password"], $_POST["firstName"], $_POST["lastName"], $_POST["email"])) {
+            return;
+        }
+        $this->model->user->registerStudent(
+            $_POST["login"], $_POST["password"],
+            $_POST["firstName"], $_POST["lastName"], $_POST["email"]
+        );
+        $this->login();
     }
 
     private function logout(): void {

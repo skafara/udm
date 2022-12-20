@@ -16,4 +16,9 @@ abstract class AController {
 
     abstract function getData(): array;
 
+    protected function redirect($url): void {
+        header("Location: $url");
+        die();
+    }
+
 }

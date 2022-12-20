@@ -24,9 +24,10 @@
                 <p class="text-center">
                     Chci <strong>sdílet</strong> své&nbsp;materiály se studenty...
                 </p>
-                <button type="button" class="btn btn-success btn-lg pill">
+                <a href='{{ (loggedIn) ? ".?page=admin" : ".?page=home&authform=login" }}' type="button" class="btn btn-success btn-lg pill">
+                    <span class="fa fa-share-alt" aria-hidden="true"></span>
                     Sdílet materiály
-                </button>
+                </a>
             </div>
         </div>
         <div class="col-md-6">
@@ -41,6 +42,7 @@
                                    placeholder="klíčové slovo" aria-label="klíčové slovo"
                                    aria-describedby="searchButton" autofocus>
                             <button id="searchButton" class="btn btn-primary" type="submit">
+                                <span class="fa fa-search" aria-hidden="true"></span>
                                 Vyhledat
                             </button>
                         </div>
@@ -52,6 +54,7 @@
                     </label>
                     <a href=".?page=search">
                         <button type="button" class="btn btn-primary btn-lg pill">
+                            <span class="fa fa-search" aria-hidden="true"></span>
                             Hledat manuálně
                         </button>
                     </a>
@@ -60,16 +63,6 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById("searchForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const searchInput = document.getElementById("searchInput");
-            let location = ".?page=search";
-            if (searchInput.value !== "") {
-                location += "&q=" + searchInput.value;
-            }
-            window.location = location;
-        })
-    </script>
+    <script src="./js/home.js"></script>
 
 {% endblock %}

@@ -25,6 +25,18 @@ const PAGES = [
     "search" => [
         P_TEMPLATE => "search.twig",
         P_CONTROLLER => \udm\controller\Search::class
+    ],
+    "material" => [
+        P_TEMPLATE => "material.twig",
+        P_CONTROLLER => \udm\controller\Material::class
+    ],
+    "admin" => [
+        P_TEMPLATE => "admin.twig",
+        P_CONTROLLER => \udm\controller\Admin::class
+    ],
+    "user" => [
+        P_TEMPLATE => "user.twig",
+        P_CONTROLLER => \udm\controller\User::class
     ]
 ];
 
@@ -86,3 +98,9 @@ const DEF_MATERIALGROUP_DESCRIPTION = [
 ];
 
 // -- END MATERIALS RELATED DESCRIPTIONS --
+
+// -- DATA --
+
+const DATA_FOLDER = "data";
+
+// -- END DATA --

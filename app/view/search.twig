@@ -6,13 +6,17 @@
 
     <div class="p-2 border-top border-bottom bg-light">
         <h1 class="h2 mb-0">
+            <span class="fa fa-search" aria-hidden="true"></span>
             Hledání{{ (query) ? ": %#{query}%" : "" }}
         </h1>
     </div>
 
     <div class="my-3">
         <div class="my-3">
-            <h2 class="h4">Předměty</h2>
+            <h2 class="h4">
+                <span class="fa fa-book" aria-hidden="true"></span>
+                Předměty
+            </h2>
             <hr class="mt-0">
             <div>
                 {% if subjects %}
@@ -77,6 +81,7 @@
                                                                         <a href=".?page=search&q={{ department }}">{{ department }}</a>/<a href='.?page=search&q={{ "#{ department }/#{ subject.Subject_short_name }" }}'>{{ subject.Subject_short_name }}</a>
                                                                     </span>
                                                                     <a href=".?page=subject&id={{ id }}" class="btn btn-primary">
+                                                                        <span class="fa fa-eye" aria-hidden="true"></span>
                                                                         Zobrazit
                                                                     </a>
                                                                 </div>
@@ -97,7 +102,10 @@
             </div>
         </div>
         <div class="my-3">
-            <h2 class="h4">Vyučující</h2>
+            <h2 class="h4">
+                <span class="fa fa-graduation-cap" aria-hidden="true"></span>
+                Vyučující
+            </h2>
             <hr class="mt-0">
             <div>
                 {% if teachers %}
@@ -156,7 +164,10 @@
             </div>
         </div>
         <div class="my-3">
-            <h2 class="h4">Materiály</h2>
+            <h2 class="h4">
+                <span class="fa fa-leanpub" aria-hidden="true"></span>
+                Materiály
+            </h2>
             <hr class="mt-0">
             <div>
                 {% if materials %}

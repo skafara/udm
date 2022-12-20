@@ -29,10 +29,15 @@
                                             <h6 class="card-title">
                                                 Materiály:
                                             </h6>
-                                            <ul class="mb-0">
+                                            <ul class="mb-0 list-unstyled">
                                                 {% for materialId, material in (materialGroup.materials | batch(4))[0] %}
-                                                    <li>
-                                                        {{ material.Material_full_name }}<!-- TODO view, download -->
+                                                    <li class="mb-1">
+                                                        <a href=".?page=material&action=download&id={{ materialId }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                                            <span class="fa fa-download" aria-hidden="true"></span>
+                                                        </a>
+                                                        <a href=".?page=material&action=view&id={{ materialId }}" target="_blank" class="text-black">
+                                                            {{ material.Material_full_name }}
+                                                        </a>
                                                     </li>
                                                 {% endfor %}
                                                 {% if (materialGroup.materials | length) > 4 %}
@@ -46,7 +51,8 @@
                                                     {{ "#{materialGroup.User_last_name} #{materialGroup.User_first_name}" }}
                                                 </span>
                                             </a>
-                                            <a href=".?page=subject&id={{ id }}" class="btn btn-primary"> <!-- TODO -->
+                                            <a href=".?page=material&action=view&groupid={{ materialGroupId }}" class="btn btn-primary"> <!-- TODO -->
+                                                <span class="fa fa-eye" aria-hidden="true"></span>
                                                 Zobrazit
                                             </a>
                                         </div>
