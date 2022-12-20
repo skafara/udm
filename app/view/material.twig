@@ -240,7 +240,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Jméno souboru</th>
-                                    <th scope="col">Skutečné jméno</th>
+                                    <th scope="col">Skutečné jméno souboru</th>
                                     <th scope="col">Schváleno</th>
                                     <th scope="col">Akce</th>
                                 </tr>
@@ -279,7 +279,7 @@
     {% elseif action == "viewMaterial" %}
 
         <div class="p-2 border-top border-bottom bg-light">
-            {% if material %}
+            {% if description %}
                 <p class="font-monospace mb-1">
                     <a href=".?page=search&q={{ description.Faculty_short_name }}">{{ description.Faculty_short_name }}</a>/<a href='.?page=search&q={{ "#{ description.Faculty_short_name }/#{ description.Department_short_name }" }}'>{{ description.Department_short_name }}</a>/<a href='.?page=search&q={{ "#{ description.Department_short_name }/#{ description.Subject_short_name }" }}'>{{ description.Subject_short_name }}</a>
                 </p>
@@ -294,6 +294,9 @@
             {% else %}
                 <h1 class="h2 mb-0">Neexistující materiál</h1>
             {% endif %}
+        </div>
+        <div class="my-3">
+            <iframe src="{{ materialUrl }}"></iframe>
         </div>
 
     {% endif %}

@@ -29,6 +29,8 @@ class Material extends AController {
                 }
                 elseif (isset($_GET["id"])) {
                     $this->data[SELF::ACTION_KEY] = "viewMaterial";
+                    $this->data["description"] = $this->model->material->getDescription($this->model->material->getMaterialGroupId($_GET["id"]));
+                    $this->data["materialUrl"] = DATA_FOLDER . "/" . $this->model->material->getDiskFileName($_GET["id"]);
                 }
             }
             elseif ($action == "download") {

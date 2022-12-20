@@ -195,4 +195,10 @@ class Material extends AModel {
         return $result;
     }
 
+    public function exists(int $id): bool {
+        $stmt = $this->pdo->prepare("SELECT id FROM Material WHERE id = :id;");
+        $stmt->execute([":id" => $id]);
+        return !!$stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
