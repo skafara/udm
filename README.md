@@ -11,4 +11,7 @@ V kořenovém adresáři aplikace `app` zadejte příkaz pro instalaci závislos
 
 Nechte databázi provést SQL skript `install.sql` umístěný v krořenovém adresáři aplikace.
 
+Umožněte webovému serveru přístup pro čtení a zápis v adresáři `data` 
+kořenového adresáře aplikace.
+
 Přesuňte obsah kořenového adresáře aplikace na místo web serveru.
