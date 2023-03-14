@@ -137,8 +137,6 @@ class Material extends AController {
         header('Content-Disposition: attachment; filename="' . basename($this->model->material->getUploadFileName($_GET["id"])) . '"');
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
-        echo $actualFilePath;
-        echo filesize($actualFilePath);
         header('Content-Length: ' . filesize($actualFilePath));
         flush();
         readfile($actualFilePath);
