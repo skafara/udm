@@ -9,6 +9,8 @@ V kořenovém adresáři aplikace `app` zadejte příkaz pro instalaci závislos
 
 `composer install`
 
+V případě potřeby změny adresy databázového serveru, uživatelského jména nebo hesla pro připojení k databázi z výchozích hodnot, změňte hodnoty konstant `DB_HOST`, `DB_USER` nebo `DB_PASS` v souboru `config.inc.php` umístěném v kořenovém adresáři aplikace.
+
 Nechte databázi provést SQL skript `install.sql` umístěný v krořenovém adresáři aplikace.
 
 V kořenovém adresáři aplikace vytvořte adresář `data` a umožněte webovému serveru přístup pro čtení a zápis.
